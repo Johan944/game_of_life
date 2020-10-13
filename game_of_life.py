@@ -12,13 +12,6 @@ class GameOfLife:
         self.rule_dead_neighbours = np.zeros(8, np.uint8)
         self.rule_dead_neighbours[3] = 1
 
-
-    def imshow_helper(self, sleepSeconds=0.5):
-        ''' helper method to display a board for short time interval 
-            being lazy and using the MATLAB style API '''
-        print(np.reshape(self.board, (-1, self.width)))
-
-
     def set_board(self, width, height):
         self.width = width
         self.height = height
@@ -27,11 +20,9 @@ class GameOfLife:
 
     def run(self, nb_max_iterations=-1):
         nb_current_iterations = 0
-        self.imshow_helper()
         while nb_current_iterations < nb_max_iterations:
             neighbours_count = self.get_neighbours()
             self.board = np.where(self.board, self.rule_alive_neighbours[neighbours_count], self.rule_dead_neighbours[neighbours_count])
-            self.imshow_helper()
             nb_current_iterations += 1
 
     def select_cell(self, cell_pos):
