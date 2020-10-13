@@ -11,9 +11,7 @@ class GameOfLife:
         self.rule_alive_neighbours[[2, 3]] = 1
         self.rule_dead_neighbours = np.zeros(8, np.uint8)
         self.rule_dead_neighbours[3] = 1
-        self.board[15] = 1
-        self.board[16] = 1
-        self.board[17] = 1
+
 
     def imshow_helper(self, sleepSeconds=0.5):
         ''' helper method to display a board for short time interval 
@@ -41,7 +39,3 @@ class GameOfLife:
 
     def get_neighbours(self):
         return np.array([sum(self.board[(idx + self.neighbours_position) % (self.width*self.height)]) for idx, _ in np.ndenumerate(self.board)])
-        # for idx, _ in np.ndenumerate(self.board):
-        #     neigbours_position = (idx + self.neighbours_position) % (self.width*self.height)
-        #     nb_alive_neighbours = sum(self.board[neigbours_position])
-        #     print(nb_alive_neighbours, " - ", test[idx])
