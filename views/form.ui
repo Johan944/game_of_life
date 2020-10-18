@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>985</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>400</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>400</width>
+     <height>600</height>
+    </size>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QFrame" name="frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <widget class="QFrame" name="frame_2">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <widget class="QWidget" name="horizontalWidget" native="true">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QPushButton" name="button_stable">
+               <property name="text">
+                <string>Stables</string>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>50</width>
+                 <height>50</height>
+                </size>
+               </property>
+               <property name="flat">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_7">
+               <property name="text">
+                <string>Périodiques</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_6">
+               <property name="text">
+                <string>Vaisseaux</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_5">
+               <property name="text">
+                <string>Mathusalems</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_4">
+               <property name="text">
+                <string>Puffeurs</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_3">
+               <property name="text">
+                <string>Canons</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_2">
+               <property name="text">
+                <string>Jardin d'Eden</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_1">
+               <property name="text">
+                <string>Spacefillers</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QWidget" name="horizontalWidget_3" native="true">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QLineEdit" name="input_nb_columns">
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="placeholderText">
+                <string>Nombre de colonnes</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="input_nb_lines">
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="placeholderText">
+                <string>Nombre de lignes</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEdit">
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="button_play">
+               <property name="text">
+                <string>Lecture</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="button_reset">
+               <property name="text">
+                <string>Reset</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSlider" name="slider_time">
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::NoTicks</enum>
+               </property>
+               <property name="tickInterval">
+                <number>5</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>Nombre d'itérations :</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_nb_iterations">
+               <property name="text">
+                <string>0</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QWidget" name="drawing_widget" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="DrawingGrid" name="drawing_grid" native="true">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>600</height>
+                </size>
+               </property>
+               <property name="autoFillBackground">
+                <bool>false</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DrawingGrid</class>
+   <extends>QWidget</extends>
+   <header location="global">drawing_grid</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
