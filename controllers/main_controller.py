@@ -13,7 +13,7 @@ class ThreadRunAlgo(QtCore.QThread):
             self.main_controller.game_of_life.run(1)
             self.main_controller.cell_changed.emit(self.main_controller.game_of_life.board)
             self.main_controller.main_view.ui.label_nb_iterations.setText(str(self.main_controller.game_of_life.nb_current_iterations))
-            time.sleep(self.main_controller.game_of_life.time_value)
+            time.sleep(self.main_controller.time_value)
 
 class MainController(QtCore.QObject):
     cell_changed = QtCore.Signal(list)
@@ -23,6 +23,7 @@ class MainController(QtCore.QObject):
         self.main_view = None
         self.running = False
         self.game_of_life = game_of_life.GameOfLife(width, height)
+        self.time_value = 1
     
     def init_signals(self):
         self.main_view.ui.drawing_grid.clicked_signal.connect(self.select_cell)
@@ -42,21 +43,23 @@ class MainController(QtCore.QObject):
         self.game_of_life.set_board(width, height)
         self.cell_changed.emit(self.game_of_life.board)
 
+    @QtCore.Slot()
     def clear_board(self):
         self.game_of_life.reset_board()
         self.cell_changed.emit(self.game_of_life.board)
+        self.main_view.ui.label_nb_iterations.setText("0")
 
-    def run_algo(self):
-        self.game_of_life.run(-1)
-        self.cell_changed.emit(self.game_of_life.board)
-
+    @QtCore.Slot()
     def set_time_value(self, value):
-        self.game_of_life.time_value = (value + 1) / 100
+        self.time_value = (100 - value) / 100
 
+    @QtCore.Slot()
     def run_start(self):
         if self.running:
             self.running = False
+            self.main_view.ui.button_play.setText("Lecture")
         else:
             self.running = True
+            self.main_view.ui.button_play.setText("Pause")
             thread = ThreadRunAlgo(self)
             thread.start()
