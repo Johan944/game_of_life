@@ -1,8 +1,10 @@
 import os
+
+from PySide2 import QtGui, QtWidgets
 from PySide2.QtCore import QFile
 from PySide2.QtUiTools import QUiLoader
-from PySide2 import QtGui, QtWidgets
 from views import drawing_grid
+
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, main_controller):
@@ -24,9 +26,12 @@ class MainWindow(QtWidgets.QMainWindow):
         ui_file.close()
 
     def init_widgets(self):
-        integer_validator = QtGui.QIntValidator(5, 200)
-        self.ui.input_nb_columns.setValidator(integer_validator)
-        self.ui.input_nb_lines.setValidator(integer_validator)
+        size_validator = QtGui.QIntValidator(5, 200)
+        self.ui.input_nb_columns.setValidator(size_validator)
+        self.ui.input_nb_lines.setValidator(size_validator)
+
+        nb_iterations_validator = QtGui.QIntValidator(0, 1_000_000)
+        self.ui.input_nb_iterations.setValidator(nb_iterations_validator)
 
         self.ui.input_nb_columns.setText(str(self.main_controller.game_of_life.width))
         self.ui.input_nb_columns.textChanged.connect(self.on_text_changed_width)
@@ -39,3 +44,12 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def on_text_changed_height(self, nb_lines):
         self.ui.drawing_grid.set_size(self.ui.input_nb_columns.text(), nb_lines)
+
+    def get_number_iteration_input(self):
+        try:
+            nb_iterations = int(self.ui.input_nb_iterations.text())
+            if nb_iterations <= 0:
+                raise ValueError
+        except (ValueError, TypeError):
+            return -1
+        return nb_iterations

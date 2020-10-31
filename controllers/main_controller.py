@@ -1,8 +1,9 @@
-from PySide2 import QtCore, QtWidgets
 import functools
+import time
+
 import figures_manager
 import game_of_life
-import time
+from PySide2 import QtCore, QtWidgets
 
 
 class ThreadRunAlgo(QtCore.QThread):
@@ -11,24 +12,39 @@ class ThreadRunAlgo(QtCore.QThread):
         self.main_controller = main_controller
 
     def run(self):
-        while self.main_controller.running is True:
-            self.main_controller.game_of_life.run(1)
+        if self.main_controller.nb_iterations > 0:
+            self.main_controller.game_of_life.run(self.main_controller.nb_iterations)
             self.main_controller.cell_changed.emit(self.main_controller.game_of_life.board)
-            self.main_controller.main_view.ui.label_nb_iterations.setText(str(self.main_controller.game_of_life.nb_current_iterations))
-            time.sleep(self.main_controller.time_value)
+            self.main_controller.main_view.ui.label_nb_iterations.setText(
+                str(self.main_controller.game_of_life.nb_current_iterations)
+            )
+            self.main_controller.running = False
+            self.main_controller.main_view.ui.button_play.setText("Lecture")
+        else:
+            while self.main_controller.running is True:
+                self.main_controller.game_of_life.run(1)
+                self.main_controller.cell_changed.emit(self.main_controller.game_of_life.board)
+                self.main_controller.main_view.ui.label_nb_iterations.setText(
+                    str(self.main_controller.game_of_life.nb_current_iterations)
+                )
+                time.sleep(self.main_controller.time_value)
+
 
 class MainController(QtCore.QObject):
     cell_changed = QtCore.Signal(list)
-    
+
     def __init__(self, width=100, height=50):
         super().__init__()
         self.main_view = None
         self.running = False
         self.game_of_life = game_of_life.GameOfLife(width, height)
         self.time_value = 1
-        self.figures_manager = figures_manager.FiguresManager(self.game_of_life.width, self.game_of_life.height)
+        self.nb_iterations = -1
+        self.figures_manager = figures_manager.FiguresManager(
+            self.game_of_life.width, self.game_of_life.height
+        )
         self.figure_to_place = ()
-    
+
     def init_signals(self):
         self.main_view.ui.drawing_grid.clicked_signal.connect(self.select_cell)
         self.cell_changed.connect(self.main_view.ui.drawing_grid.set_grid_content)
@@ -38,7 +54,9 @@ class MainController(QtCore.QObject):
         self.main_view.ui.button_stable.clicked.connect(lambda: self.select_figures("stable"))
         self.main_view.ui.button_periodic.clicked.connect(lambda: self.select_figures("periodic"))
         self.main_view.ui.button_ship.clicked.connect(lambda: self.select_figures("ship"))
-        self.main_view.ui.button_mathusalem.clicked.connect(lambda: self.select_figures("mathusalem"))
+        self.main_view.ui.button_mathusalem.clicked.connect(
+            lambda: self.select_figures("mathusalem")
+        )
         self.main_view.ui.button_puffer.clicked.connect(lambda: self.select_figures("puffer"))
         self.main_view.ui.button_gun.clicked.connect(lambda: self.select_figures("gun"))
         self.main_view.ui.button_eden.clicked.connect(lambda: self.select_figures("eden"))
@@ -49,7 +67,9 @@ class MainController(QtCore.QObject):
         self.buttons = []
         for figure in self.figures_manager.figures[figure_type]:
             button = QtWidgets.QPushButton(figure)
-            button.clicked.connect(functools.partial(self.on_clicked_figure_button, figure_type, figure))
+            button.clicked.connect(
+                functools.partial(self.on_clicked_figure_button, figure_type, figure)
+            )
             self.buttons.append(button)
         for button in self.buttons:
             layout.addWidget(button)
@@ -62,7 +82,9 @@ class MainController(QtCore.QObject):
     @QtCore.Slot(int)
     def select_cell(self, cell_pos):
         if self.figure_to_place:
-            coords_to_place = self.figures_manager.get_coords_from_figure(self.figure_to_place[0], self.figure_to_place[1], cell_pos)
+            coords_to_place = self.figures_manager.get_coords_from_figure(
+                self.figure_to_place[0], self.figure_to_place[1], cell_pos
+            )
             for pos in coords_to_place:
                 if self.game_of_life.board[pos] == 0:
                     self.game_of_life.select_cell(pos)
@@ -96,5 +118,6 @@ class MainController(QtCore.QObject):
         else:
             self.running = True
             self.main_view.ui.button_play.setText("Pause")
+            self.nb_iterations = self.main_view.get_number_iteration_input()
             thread = ThreadRunAlgo(self)
             thread.start()

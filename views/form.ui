@@ -188,12 +188,18 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit">
+              <widget class="QLineEdit" name="input_nb_iterations">
                <property name="maximumSize">
                 <size>
                  <width>100</width>
                  <height>16777215</height>
                 </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="placeholderText">
+                <string>Nombre d'itérations</string>
                </property>
               </widget>
              </item>
