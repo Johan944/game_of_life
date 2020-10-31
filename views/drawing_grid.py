@@ -37,18 +37,6 @@ class DrawingGrid(QtWidgets.QWidget):
     def resizeEvent(self, event):
         self.set_size(self.width, self.height)
 
-    def set_width(self, width):
-        try:
-            self.set_size(int(width), self.height)
-        except ValueError:
-            pass
-
-    def set_height(self, height):
-        try:
-            self.set_size(self.width, int(height))
-        except ValueError:
-            pass
-
     def paintEvent(self, e):
         qp = QtGui.QPainter()
         qp.begin(self)
@@ -58,9 +46,9 @@ class DrawingGrid(QtWidgets.QWidget):
     def draw_grid(self, qp):
         cell_pos = 0
         y_coord = 0
-        while y_coord < self.height * self.space_height:
+        for __ in range(self.height):
             x_coord = 0
-            while x_coord < self.width * self.space_width:
+            for _ in range(self.width):
                 if self.grid_content[cell_pos] == 1:
                     qp.fillRect(QtCore.QRect(x_coord, y_coord, self.space_width, self.space_height), QtGui.QColor(0, 0, 0))
                 else:

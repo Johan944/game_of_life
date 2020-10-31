@@ -27,10 +27,11 @@ class GameOfLife:
         self.board = np.zeros((self.width * self.height), dtype=np.uint8)
         self.nb_current_iterations = 0
 
-    def run(self, nb_max_iterations=-1):
-        neighbours_count = self.get_neighbours()
-        self.board = np.where(self.board, self.rule_alive_neighbours[neighbours_count], self.rule_dead_neighbours[neighbours_count])
-        self.nb_current_iterations += 1
+    def run(self, nb_max_iterations=1):
+        for _ in range(nb_max_iterations):
+            neighbours_count = self.get_neighbours()
+            self.board = np.where(self.board, self.rule_alive_neighbours[neighbours_count], self.rule_dead_neighbours[neighbours_count])
+            self.nb_current_iterations += 1
 
     def select_cell(self, cell_pos):
         self.board[cell_pos] = np.where(self.board[cell_pos] == 1, 0, 1)
