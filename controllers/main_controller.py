@@ -1,4 +1,6 @@
-from PySide2 import QtCore
+from PySide2 import QtCore, QtWidgets
+import functools
+import figures_manager
 import game_of_life
 import time
 
@@ -18,12 +20,14 @@ class ThreadRunAlgo(QtCore.QThread):
 class MainController(QtCore.QObject):
     cell_changed = QtCore.Signal(list)
     
-    def __init__(self, width=20, height=10):
+    def __init__(self, width=100, height=50):
         super().__init__()
         self.main_view = None
         self.running = False
         self.game_of_life = game_of_life.GameOfLife(width, height)
         self.time_value = 1
+        self.figures_manager = figures_manager.FiguresManager(self.game_of_life.width, self.game_of_life.height)
+        self.figure_to_place = ()
     
     def init_signals(self):
         self.main_view.ui.drawing_grid.clicked_signal.connect(self.select_cell)
@@ -31,16 +35,47 @@ class MainController(QtCore.QObject):
         self.main_view.ui.drawing_grid.resize_board_signal.connect(self.resize_board)
         self.main_view.ui.slider_time.valueChanged.connect(self.set_time_value)
         self.main_view.ui.button_play.clicked.connect(self.run_start)
+        self.main_view.ui.button_stable.clicked.connect(lambda: self.select_figures("stable"))
+        self.main_view.ui.button_periodic.clicked.connect(lambda: self.select_figures("periodic"))
+        self.main_view.ui.button_ship.clicked.connect(lambda: self.select_figures("ship"))
+        self.main_view.ui.button_mathusalem.clicked.connect(lambda: self.select_figures("mathusalem"))
+        self.main_view.ui.button_puffer.clicked.connect(lambda: self.select_figures("puffer"))
+        self.main_view.ui.button_gun.clicked.connect(lambda: self.select_figures("gun"))
+        self.main_view.ui.button_eden.clicked.connect(lambda: self.select_figures("eden"))
+
+    def select_figures(self, figure_type):
+        self.dialog = QtWidgets.QDialog(self.main_view)
+        layout = QtWidgets.QHBoxLayout()
+        self.buttons = []
+        for figure in self.figures_manager.figures[figure_type]:
+            button = QtWidgets.QPushButton(figure)
+            button.clicked.connect(functools.partial(self.on_clicked_figure_button, figure_type, figure))
+            self.buttons.append(button)
+        for button in self.buttons:
+            layout.addWidget(button)
+        self.dialog.setLayout(layout)
+        self.dialog.show()
+
+    def on_clicked_figure_button(self, figure_type, figure_name):
+        self.figure_to_place = (figure_type, figure_name)
 
     @QtCore.Slot(int)
     def select_cell(self, cell_pos):
-        self.game_of_life.select_cell(cell_pos)
-        self.main_view.ui.label_nb_iterations.setText("0")
+        if self.figure_to_place:
+            coords_to_place = self.figures_manager.get_coords_from_figure(self.figure_to_place[0], self.figure_to_place[1], cell_pos)
+            for pos in coords_to_place:
+                if self.game_of_life.board[pos] == 0:
+                    self.game_of_life.select_cell(pos)
+            self.figure_to_place = ()
+        else:
+            self.game_of_life.select_cell(cell_pos)
+            self.main_view.ui.label_nb_iterations.setText("0")
         self.cell_changed.emit(self.game_of_life.board)
 
     @QtCore.Slot(int, int)
     def resize_board(self, width, height):
         self.game_of_life.set_board(width, height)
+        self.figures_manager.set_size(width, height)
         self.cell_changed.emit(self.game_of_life.board)
 
     @QtCore.Slot()

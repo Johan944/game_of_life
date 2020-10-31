@@ -98,49 +98,49 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_7">
+              <widget class="QPushButton" name="button_periodic">
                <property name="text">
                 <string>Périodiques</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_6">
+              <widget class="QPushButton" name="button_ship">
                <property name="text">
                 <string>Vaisseaux</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_5">
+              <widget class="QPushButton" name="button_mathusalem">
                <property name="text">
                 <string>Mathusalems</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_4">
+              <widget class="QPushButton" name="button_puffer">
                <property name="text">
                 <string>Puffeurs</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_3">
+              <widget class="QPushButton" name="button_gun">
                <property name="text">
                 <string>Canons</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_2">
+              <widget class="QPushButton" name="button_eden">
                <property name="text">
                 <string>Jardin d'Eden</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_1">
+              <widget class="QPushButton" name="button_spacefiller">
                <property name="text">
                 <string>Spacefillers</string>
                </property>
