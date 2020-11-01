@@ -63,13 +63,18 @@ class MainController(QtCore.QObject):
         self.main_view.ui.button_eden.clicked.connect(lambda: self.select_figures("eden"))
 
     def select_figures(self, figure_type):
-        dialog = figures_dialog.FiguresDialog(
+        self.figure_dialog = figures_dialog.FiguresDialog(
             self.figures_manager.figures[figure_type], figure_type
         )
-        if dialog.exec_() == 1:
-            self.figure_to_place = (dialog.current_figure_type, dialog.current_figure)
-        else:
-            print("quit")
+        self.figure_dialog.show()
+        self.figure_dialog.figure_selected_signal.connect(self.on_figure_selected)
+
+    @QtCore.Slot()
+    def on_figure_selected(self):
+        self.figure_to_place = (
+            self.figure_dialog.current_figure_type,
+            self.figure_dialog.current_figure,
+        )
 
     @QtCore.Slot(int)
     def select_cell(self, cell_pos):

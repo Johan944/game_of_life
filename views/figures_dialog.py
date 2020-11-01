@@ -4,6 +4,8 @@ from PySide2 import QtCore, QtWidgets
 
 
 class FiguresDialog(QtWidgets.QDialog):
+    figure_selected_signal = QtCore.Signal()
+
     def __init__(self, figures, figure_type):
         super(FiguresDialog, self).__init__()
 
@@ -29,4 +31,4 @@ class FiguresDialog(QtWidgets.QDialog):
     def on_clicked_figure_button(self, figure_type, figure):
         self.current_figure_type = figure_type
         self.current_figure = figure
-        self.accept()
+        self.figure_selected_signal.emit()
