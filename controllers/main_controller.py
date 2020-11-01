@@ -4,6 +4,7 @@ import time
 import figures_manager
 import game_of_life
 from PySide2 import QtCore, QtWidgets
+from views import figures_dialog
 
 
 class ThreadRunAlgo(QtCore.QThread):
@@ -62,22 +63,13 @@ class MainController(QtCore.QObject):
         self.main_view.ui.button_eden.clicked.connect(lambda: self.select_figures("eden"))
 
     def select_figures(self, figure_type):
-        self.dialog = QtWidgets.QDialog(self.main_view)
-        layout = QtWidgets.QHBoxLayout()
-        self.buttons = []
-        for figure in self.figures_manager.figures[figure_type]:
-            button = QtWidgets.QPushButton(figure)
-            button.clicked.connect(
-                functools.partial(self.on_clicked_figure_button, figure_type, figure)
-            )
-            self.buttons.append(button)
-        for button in self.buttons:
-            layout.addWidget(button)
-        self.dialog.setLayout(layout)
-        self.dialog.show()
-
-    def on_clicked_figure_button(self, figure_type, figure_name):
-        self.figure_to_place = (figure_type, figure_name)
+        dialog = figures_dialog.FiguresDialog(
+            self.figures_manager.figures[figure_type], figure_type
+        )
+        if dialog.exec_() == 1:
+            self.figure_to_place = (dialog.current_figure_type, dialog.current_figure)
+        else:
+            print("quit")
 
     @QtCore.Slot(int)
     def select_cell(self, cell_pos):
